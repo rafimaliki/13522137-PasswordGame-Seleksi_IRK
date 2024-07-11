@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import InputBox from "./components/InputBox";
-import RuleContainer from "./components/RuleContainer";
+import InputBox from "../components/InputBox";
+import RuleContainer from "../components/RuleContainer";
 
-function App() {
+const GamePage = () => {
   const [password, setPassword] = useState("");
 
   return (
@@ -16,6 +16,6 @@ function App() {
       </div>
     </>
   );
-}
+};
 
-export default App;
+export default GamePage;
