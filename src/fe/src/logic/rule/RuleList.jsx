@@ -51,15 +51,15 @@ Rules.addRule(
     Rule9
   )
 );
-Rules.addRule(
-  new Rule(10, "Oh tidak! Password kamu terbakar 🔥. Cepat padamkan!")
-);
-Rules.addRule(
-  new Rule(
-    11,
-    "🥚 Ini ayam saya Paul. Dia belum meentas. Tolong sertakan dia dalam password kamu agar dia aman"
-  )
-);
+// Rules.addRule(
+//   new Rule(10, "Oh tidak! Password kamu terbakar 🔥. Cepat padamkan!")
+// );
+// Rules.addRule(
+//   new Rule(
+//     11,
+//     "🥚 Ini ayam saya Paul. Dia belum meentas. Tolong sertakan dia dalam password kamu agar dia aman"
+//   )
+// );
 Rules.addRule(
   new Rule(
     12,
@@ -72,18 +72,18 @@ Rules.addRule(
 Rules.addRule(
   new Rule(13, "Password kamu harus mengandung tahun kabisat", Rule13)
 );
-Rules.addRule(
-  new Rule(
-    14,
-    "🐔 Paul sudah menetas! Jangan lupa beri dia makan. Dia memakan 1 🐛 tiap 30 detik"
-  )
-);
-Rules.addRule(
-  new Rule(
-    15,
-    "Tumbal harus dilakukan. Pilih 1 huruf yang tidak bisa lagi kamu gunakan"
-  )
-);
+// Rules.addRule(
+//   new Rule(
+//     14,
+//     "🐔 Paul sudah menetas! Jangan lupa beri dia makan. Dia memakan 1 🐛 tiap 30 detik"
+//   )
+// );
+// Rules.addRule(
+//   new Rule(
+//     15,
+//     "Tumbal harus dilakukan. Pilih 1 huruf yang tidak bisa lagi kamu gunakan"
+//   )
+// );
 Rules.addRule(
   new Rule(
     16,

@@ -18,7 +18,7 @@ const isLeapYear = (year) => {
  * @returns {boolean} True if the password contains at least one leap year, false otherwise.
  */
 const Rule13 = (password) => {
-  const yearPattern = /\b\d+\b/g; // Regular expression to match any sequence of digits representing years
+  const yearPattern = /[\d]+/g; // Regular expression to match any sequence of digits representing years
 
   const years = password.match(yearPattern);
 
@@ -29,6 +29,7 @@ const Rule13 = (password) => {
   // Check if any of the matched years are leap years
   const leapYear = years.find((yearStr) => {
     const year = parseInt(yearStr);
+    console.log(year);
     return isLeapYear(year);
   });
 

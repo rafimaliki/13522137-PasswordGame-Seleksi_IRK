@@ -15,7 +15,7 @@ class Rule {
     this.text = text;
     this.checker = checker;
     this.JSXdata = JSXdata;
-    this.correct = false; // Indicates if the password satisfies the rule.
+    this.correct = null; // Indicates if the password satisfies the rule.
   }
 
   /**
@@ -50,9 +50,10 @@ class RuleList {
   addRule(rule) {
     if (this.list.length === 0) {
       rule.correct = false; // Mark the first rule as incorrect initially.
+      this.countShow = 1;
     }
     this.list.push(rule);
-    this.countShow = this.list.length;
+    // this.countShow = this.list.length;
   }
 
   /**
