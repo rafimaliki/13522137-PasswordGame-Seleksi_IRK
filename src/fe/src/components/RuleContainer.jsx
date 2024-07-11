@@ -16,7 +16,10 @@ const RuleContainer = ({ password }) => {
         transition={{ duration: 0.3 }}
       >
         <RuleBox number={rule.number} correct={rule.correct}>
-          {rule.text}
+          <div className="flex flex-col">
+            <p>{rule.text}</p>
+            <div>{rule.JSXdata}</div>
+          </div>
         </RuleBox>
       </motion.div>
     ));

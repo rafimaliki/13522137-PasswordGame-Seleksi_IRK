@@ -1,3 +1,5 @@
+/* styles.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,5 +25,14 @@
 
   .box-shadow {
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .rotate-refresh {
+    display: inline-block;
+    transition: transform 0.4s ease-in-out;
+  }
+
+  .rotate-refresh:hover {
+    transform: rotate(180deg);
   }
 }

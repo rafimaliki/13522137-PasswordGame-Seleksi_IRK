@@ -12,8 +12,16 @@ import kmpMatch from "../../stringMatching/KMP";
  */
 const Rule20 = (password) => {
   const now = new Date();
-  const currentHour = now.getHours();
-  const currentMinute = now.getMinutes();
+
+  var currentHour = now.getHours();
+  if (currentHour < 10) {
+    currentHour = "0" + currentHour;
+  }
+
+  var currentMinute = now.getMinutes();
+  if (currentMinute < 10) {
+    currentMinute = "0" + currentMinute;
+  }
 
   const time = `${currentHour}:${currentMinute}`;
 
