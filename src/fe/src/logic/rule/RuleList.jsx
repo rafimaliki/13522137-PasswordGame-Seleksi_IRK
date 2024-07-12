@@ -12,6 +12,7 @@ import { Rule8 } from "./validator/Rule-8";
 import Rule9 from "./validator/Rule-9";
 import { Rule12 } from "./validator/Rule-12";
 import Rule13 from "./validator/Rule-13";
+import Rule15 from "./validator/Rule-15";
 import Rule16 from "./validator/Rule-16";
 import Rule17 from "./validator/Rule-17";
 import Rule18 from "./validator/Rule-18";
@@ -19,6 +20,7 @@ import Rule19 from "./validator/Rule-19";
 import Rule20 from "./validator/Rule-20";
 import Rule8Image from "./components/Rule-8-JSX";
 import Rule12Image from "./components/Rule-12-JSX";
+import Rule15Keyboard from "./components/Rule-15-JSX";
 
 const Rules = new RuleList();
 Rules.addRule(new Rule(1, "Password kamu harus setidaknya 5 karakter", Rule1));
@@ -78,12 +80,14 @@ Rules.addRule(
 //     "🐔 Paul sudah menetas! Jangan lupa beri dia makan. Dia memakan 1 🐛 tiap 30 detik"
 //   )
 // );
-// Rules.addRule(
-//   new Rule(
-//     15,
-//     "Tumbal harus dilakukan. Pilih 1 huruf yang tidak bisa lagi kamu gunakan"
-//   )
-// );
+Rules.addRule(
+  new Rule(
+    15,
+    "Tumbal harus dilakukan. Pilih 2 huruf yang tidak bisa lagi kamu gunakan",
+    Rule15,
+    <Rule15Keyboard />
+  )
+);
 Rules.addRule(
   new Rule(
     16,

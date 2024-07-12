@@ -1,10 +1,9 @@
 /**
  * @file Rule-18.js
  * @brief Implements Rule 18 for password validation.
- * Uses the Knuth-Morris-Pratt algorithm for string matching.
  */
 
-import kmpMatch from "../../stringMatching/KMP";
+import { matchingAlgorithm } from "../../gameState";
 
 /**
  * Rule 18 function for password validation.
@@ -16,7 +15,7 @@ import kmpMatch from "../../stringMatching/KMP";
  */
 const Rule18 = (password) => {
   const length = password.length.toString();
-  return kmpMatch(password, length);
+  return matchingAlgorithm(password, length);
 };
 
 export default Rule18;

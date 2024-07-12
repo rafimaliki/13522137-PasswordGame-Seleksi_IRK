@@ -53,12 +53,13 @@ class RuleList {
       this.countShow = 1;
     }
     this.list.push(rule);
-    // this.countShow = this.list.length;
+    this.countShow = this.list.length;
   }
 
   /**
    * Checks the provided password against all visible rules.
    * @param {string} password - The password to be checked.
+   * @returns {RuleList} The list of rules.
    */
   checkAll(password) {
     var countCorrect = 0;
@@ -79,6 +80,8 @@ class RuleList {
     if (countCorrect === this.list.length) {
       // console.log("You win!");
     }
+
+    return this;
   }
 
   /**

@@ -51,17 +51,31 @@ async function getRandomImagesFromBucket(bucketName, numberOfImages) {
   }
 }
 
+async function getAllImagesFromBucket(bucketName) {
+  try {
+    const [files] = await storage.bucket(bucketName).getFiles();
+
+    // Create an array to store result objects
+    const resultArray = [];
+
+    // Populate the array with objects containing name and img
+    for (const file of files) {
+      const [buffer] = await file.download();
+      const base64String = buffer.toString("base64");
+      const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
+      resultArray.push({ name: fileNameWithoutExtension, img: base64String });
+    }
+
+    return resultArray;
+  } catch (err) {
+    console.error("Error retrieving random images from bucket:", err);
+    return [];
+  }
+}
+
 // Define routes
 app.get("/", (req, res) => {
-  res.send("Welcome to the Node.js Backend!");
-});
-
-app.get("/data", (req, res) => {
-  const data = {
-    message: "Hello, world!",
-    timestamp: new Date(),
-  };
-  res.json(data);
+  res.send("Sui-chan wa kyou mo kawaii!");
 });
 
 // Route to get random images from a bucket
@@ -75,6 +89,22 @@ app.get("/images", async (req, res) => {
 
   try {
     const images = await getRandomImagesFromBucket(bucketName, numberOfImages);
+    res.json(images);
+  } catch (err) {
+    res.status(500).send("Error retrieving images");
+  }
+});
+
+// rout to get all images from a bucket
+app.get("/allimages", async (req, res) => {
+  const bucketName = req.query.bucketName;
+
+  if (!bucketName) {
+    return res.status(400).send("Invalid query parameters");
+  }
+
+  try {
+    const images = await getAllImagesFromBucket(bucketName);
     res.json(images);
   } catch (err) {
     res.status(500).send("Error retrieving images");

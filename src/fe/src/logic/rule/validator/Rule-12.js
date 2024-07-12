@@ -3,7 +3,7 @@
  * @brief Implements Rule 8 for password validation using the Knuth-Morris-Pratt algorithm for string matching.
  */
 
-import kmpMatch from "../../stringMatching/KMP";
+import { matchingAlgorithm } from "../../gameState";
 
 /**
  * List of forbidden words for Rule 8 validation.
@@ -20,7 +20,7 @@ var Captcha = [];
 const Rule12 = (password) => {
   //   if (Captcha.length === 0) return true;
   for (let i = 0; i < Captcha.length; i++) {
-    if (kmpMatch(password, Captcha[i])) {
+    if (matchingAlgorithm(password, Captcha[i])) {
       return true;
     }
   }

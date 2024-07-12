@@ -11,6 +11,7 @@ const kmpMatch = (text, pattern) => {
   while (i < n) {
     if (pattern.charAt(j) == text.charAt(i)) {
       if (j == m - 1) {
+        // console.log("Match found with KMP");
         return true;
       }
       i++;

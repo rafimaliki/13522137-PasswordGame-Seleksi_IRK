@@ -4,7 +4,7 @@
  * Uses the Knuth-Morris-Pratt algorithm for string matching.
  */
 
-import kmpMatch from "../../stringMatching/KMP";
+import { matchingAlgorithm } from "../../gameState";
 
 /**
  * List of phrases containing "IRK".
@@ -22,7 +22,7 @@ const IRK = ["I want IRK", "I need IRK", "I love IRK"];
  */
 const Rule16 = (password) => {
   for (let i = 0; i < IRK.length; i++) {
-    if (kmpMatch(password, IRK[i])) {
+    if (matchingAlgorithm(password, IRK[i])) {
       return true;
     }
   }

@@ -4,7 +4,7 @@
  * Uses the Knuth-Morris-Pratt algorithm for string matching.
  */
 
-import kmpMatch from "../../stringMatching/KMP";
+import { matchingAlgorithm } from "../../gameState";
 
 /**
  * List of months in Indonesian.
@@ -35,7 +35,7 @@ const Bulan = [
  */
 const Rule6 = (password) => {
   for (let i = 0; i < Bulan.length; i++) {
-    if (kmpMatch(password.toLowerCase(), Bulan[i])) {
+    if (matchingAlgorithm(password.toLowerCase(), Bulan[i])) {
       return true;
     }
   }

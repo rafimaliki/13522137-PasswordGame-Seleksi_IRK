@@ -3,7 +3,7 @@
  * @brief Implements Rule 17 for password validation.
  */
 
-import kmpMatch from "../../stringMatching/KMP";
+import { matchingAlgorithm } from "../../gameState";
 
 /**
  * Checks if the password matches the current time.
@@ -25,7 +25,7 @@ const Rule20 = (password) => {
 
   const time = `${currentHour}:${currentMinute}`;
 
-  return kmpMatch(password, time); // Uses KMP string matching algorithm to check if password matches the current time
+  return matchingAlgorithm(password, time);
 };
 
 export default Rule20;
