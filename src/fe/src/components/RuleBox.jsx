@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const RuleBox = ({ correct, number, children }) => {
+const RuleBox = ({ rule, children }) => {
   return (
     <motion.div
       layout
@@ -12,19 +12,19 @@ const RuleBox = ({ correct, number, children }) => {
     >
       <div
         className={`flex flex-col w-[30rem] h-fit mt-2 min-h-28 items-center text-black rounded-lg overflow-hidden border-4 box-shadow ${
-          correct
+          rule.correct
             ? "border-[#0b910f] bg-[#e3ffe3]"
             : "border-[#af1313] bg-[#ffecec]"
         }`}
       >
         <div
           className={`flex w-full h-10 items-center border-b-4 ${
-            correct
+            rule.correct
               ? "border-[#0b910f] bg-[#aef3ae]"
               : "border-[#af1313] bg-[#ffc7c7]"
           }`}
         >
-          {correct ? (
+          {rule.correct ? (
             <p className="text-2xl font-bold pl-3 pr-2 py-1 text-[#0b910f]">
               ✓
             </p>
@@ -34,7 +34,7 @@ const RuleBox = ({ correct, number, children }) => {
             </p>
           )}
 
-          <p className="py-1 font-medium"> Rule {number}</p>
+          <p className="py-1 font-medium"> Rule {rule.number}</p>
         </div>
         <div className="mt-2  w-full px-3 font-light flex flex-col">
           {children}

@@ -1,0 +1,1 @@
+cd fe && code . && cd ../be && code . && cd ..

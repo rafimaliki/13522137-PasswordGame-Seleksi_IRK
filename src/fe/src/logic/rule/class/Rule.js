@@ -10,10 +10,9 @@ class Rule {
    * @param {function(string): boolean} - The function used to check if the password meets the rule.
    * @param {any} [JSXdata=null] - Optional JSX data associated with the rule.
    */
-  constructor(number, text, checker = (_) => false, JSXdata = null) {
+  constructor(number, validator, JSXdata) {
     this.number = number;
-    this.text = text;
-    this.checker = checker;
+    this.checker = validator;
     this.JSXdata = JSXdata;
     this.correct = null; // Indicates if the password satisfies the rule.
   }
@@ -23,8 +22,8 @@ class Rule {
    * @param {string} password - The password to be checked.
    * @returns {boolean} True if the password satisfies the rule, otherwise false.
    */
-  check(password) {
-    const correct = this.checker(password);
+  check(password, difficulty) {
+    const correct = this.checker(password, difficulty);
     this.correct = correct;
     return correct;
   }
@@ -41,6 +40,7 @@ class RuleList {
   constructor() {
     this.list = []; // Array to hold rules.
     this.countShow = 0; // Number of rules to initially show.
+    this.count = 0; // Total number of rules.
   }
 
   /**
@@ -53,7 +53,8 @@ class RuleList {
       this.countShow = 1;
     }
     this.list.push(rule);
-    this.countShow = this.list.length;
+    this.count++;
+    // this.countShow = this.list.length;
   }
 
   /**
@@ -61,16 +62,16 @@ class RuleList {
    * @param {string} password - The password to be checked.
    * @returns {RuleList} The list of rules.
    */
-  checkAll(password) {
+  checkAll(password, difficulty) {
     var countCorrect = 0;
     for (let i = 0; i < this.countShow; i++) {
-      this.list[i].check(password) ? countCorrect++ : null;
+      this.list[i].check(password, difficulty) ? countCorrect++ : null;
     }
 
     if (countCorrect === this.countShow && this.countShow < this.list.length) {
       do {
         this.countShow = Math.min(this.countShow + 1, this.list.length);
-        this.list[this.countShow - 1].check(password);
+        this.list[this.countShow - 1].check(password, difficulty);
       } while (
         this.list[this.countShow - 1].correct === true &&
         this.countShow < this.list.length
@@ -91,15 +92,13 @@ class RuleList {
   customSort() {
     const sortedList = this.list.filter((rule) => rule.correct !== null);
     sortedList.sort((a, b) => {
-      if (a.correct === b.correct) {
-        if (a.correct) {
-          return b.number - a.number;
-        } else {
-          return a.number - b.number;
-        }
+      if (a.correct === b.correct && a.correct) {
+        return b.number - a.number;
+      } else if (a.correct === b.correct && !a.correct) {
+        return a.number - b.number;
+      } else {
+        return a.correct - b.correct;
       }
-
-      return a.correct - b.correct;
     });
 
     return sortedList;

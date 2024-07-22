@@ -1,9 +1,39 @@
 import React from "react";
 import { motion } from "framer-motion";
-import RuleBox from "./RuleBox";
 import Rules from "../logic/rule/RuleList";
 
-const RuleContainer = ({ password }) => {
+const RuleContainer = ({ password, setPassword, difficulty }) => {
+  const sortRules = () => {
+    Rules.checkAll(password, difficulty);
+    const jsxObjects = Rules.list
+      .filter((rule) => rule.correct !== null)
+      .map((rule) => ({
+        ...rule,
+        jsx: (
+          <div key={rule.number}>
+            <rule.JSXdata
+              rule={rule}
+              difficulty={difficulty}
+              password={password}
+              setPassword={setPassword}
+            />
+          </div>
+        ),
+      }));
+
+    const sortedJsxObjects = jsxObjects.sort((a, b) => {
+      if (a.correct === b.correct) {
+        if (a.correct) {
+          return b.number - a.number;
+        } else {
+          return a.number - b.number;
+        }
+      }
+      return a.correct - b.correct;
+    });
+
+    return sortedJsxObjects.map((obj) => obj.jsx);
+  };
   return (
     <motion.div
       className="mb-10"
@@ -13,18 +43,7 @@ const RuleContainer = ({ password }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
     >
-      {Rules.checkAll(password)
-        .customSort()
-        .map((rule) => (
-          <RuleBox
-            number={rule.number}
-            correct={rule.correct}
-            key={rule.number}
-          >
-            <p>{rule.text}</p>
-            <div>{rule.JSXdata}</div>
-          </RuleBox>
-        ))}
+      {sortRules()}
     </motion.div>
   );
 };

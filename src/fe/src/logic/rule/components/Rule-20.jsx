@@ -3,14 +3,10 @@
  * @brief Implements Rule 17 for password validation.
  */
 
-import { matchingAlgorithm } from "../../gameState";
+import { matchingAlgorithm } from "../../gameData";
+import RuleBox from "../../../components/RuleBox";
 
-/**
- * Checks if the password matches the current time.
- * @param {string} password - The password to check against the current time.
- * @returns {boolean} True if the password matches the current time, false otherwise.
- */
-const Rule20 = (password) => {
+const Rule20Validator = (password) => {
   const now = new Date();
 
   var currentHour = now.getHours();
@@ -28,4 +24,12 @@ const Rule20 = (password) => {
   return matchingAlgorithm(password, time);
 };
 
-export default Rule20;
+const Rule20JSX = ({ difficulty, rule }) => {
+  return (
+    <RuleBox rule={rule}>
+      <p>Password kamu harus mengandung waktu sekarang</p>
+    </RuleBox>
+  );
+};
+
+export { Rule20Validator, Rule20JSX };

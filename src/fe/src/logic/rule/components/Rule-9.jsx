@@ -3,24 +3,15 @@
  * @brief Implements Rule 9 for password validation.
  */
 
-/**
- * Checks if a given string is a valid Roman numeral.
- *
- * @param {string} romanNumeral - The Roman numeral to validate.
- * @returns {boolean} True if the input is a valid Roman numeral, false otherwise.
- */
+import RuleBox from "../../../components/RuleBox";
+import { difficultyData } from "../../gameData";
+
 const isValidRomanNumeral = (romanNumeral) => {
   const romanNumeralPattern =
     /^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
   return romanNumeralPattern.test(romanNumeral);
 };
 
-/**
- * Converts a valid Roman numeral to its integer equivalent.
- *
- * @param {string} romanNumeral - The Roman numeral to convert.
- * @returns {number} The integer value of the Roman numeral.
- */
 const romanToNumber = (romanNumeral) => {
   const romanNumeralMap = {
     I: 1,
@@ -51,15 +42,7 @@ const romanToNumber = (romanNumeral) => {
   return result;
 };
 
-/**
- * Rule 9 function for password validation.
- *
- * Validates if the sum of valid Roman numeral values in the password equals 36.
- *
- * @param {string} password - The password to validate.
- * @returns {boolean} True if the sum of valid Roman numeral values equals 36, false otherwise.
- */
-const Rule9 = (password) => {
+const Rule9Validator = (password) => {
   const targetSum = 36;
   const romanNumeralMatches = password.match(/[IVXLCDM]+/g);
 
@@ -73,4 +56,15 @@ const Rule9 = (password) => {
   return false;
 };
 
-export default Rule9;
+const Rule9JSX = ({ difficulty, rule }) => {
+  return (
+    <RuleBox rule={rule}>
+      <p>
+        Angka romawi pada password kamu harus menghasilkan{" "}
+        {difficultyData[difficulty].sumRoman} jika dikalikan
+      </p>
+    </RuleBox>
+  );
+};
+
+export { Rule9Validator, Rule9JSX };

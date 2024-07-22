@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import InputBox from "../components/InputBox";
 import RuleContainer from "../components/RuleContainer";
 import ComboBox from "../components/ComboBox";
-import { setMatchingAlgorithm, setDifficulty } from "../logic/gameState";
+import { setMatchingAlgorithm } from "../logic/gameData";
 
 const GamePage = () => {
   const [password, setPassword] = useState("");
+  const [difficulty, setDifficulty] = useState("Easy");
 
   return (
     <>
@@ -26,7 +27,11 @@ const GamePage = () => {
           ></ComboBox>
         </div>
         <InputBox password={password} setPassword={setPassword} />
-        <RuleContainer password={password} />
+        <RuleContainer
+          password={password}
+          setPassword={setPassword}
+          difficulty={difficulty}
+        />
       </div>
     </>
   );
