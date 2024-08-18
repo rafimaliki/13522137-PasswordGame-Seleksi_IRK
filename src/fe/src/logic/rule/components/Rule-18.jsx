@@ -6,9 +6,28 @@
 import { matchingAlgorithm } from "../../gameData";
 import RuleBox from "../../../components/RuleBox";
 
+const Rule18Cheat = (password, setPassword, difficulty, wrongData) => {
+  let length = password.length;
+
+  while ((password + length.toString()).length != length) {
+    length++;
+  }
+
+  const newPassword = password + length.toString();
+
+  setTimeout(() => {
+    setPassword(newPassword);
+  }, 20);
+};
+
 const Rule18Validator = (password) => {
   const length = password.length.toString();
-  return matchingAlgorithm(password, length);
+  let result = matchingAlgorithm(password, length) !== -1;
+
+  return {
+    correct: result,
+    wrongData: [],
+  };
 };
 
 const Rule18JSX = ({ difficulty, rule }) => {
@@ -19,4 +38,4 @@ const Rule18JSX = ({ difficulty, rule }) => {
   );
 };
 
-export { Rule18Validator, Rule18JSX };
+export { Rule18Validator, Rule18JSX, Rule18Cheat };

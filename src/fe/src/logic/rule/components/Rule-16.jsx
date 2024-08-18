@@ -8,13 +8,27 @@ import RuleBox from "../../../components/RuleBox";
 
 const IRK = ["I want IRK", "I need IRK", "I love IRK"];
 
+const Rule16Cheat = (password, setPassword, difficulty, wrongData) => {
+  let random = Math.floor(Math.random() * IRK.length);
+  let newPassword = password + IRK[random];
+
+  setTimeout(() => {
+    setPassword(newPassword);
+  }, 20);
+};
+
 const Rule16Validator = (password) => {
+  let result = false;
   for (let i = 0; i < IRK.length; i++) {
-    if (matchingAlgorithm(password, IRK[i])) {
-      return true;
+    if (matchingAlgorithm(password, IRK[i]) !== -1) {
+      result = true;
+      break;
     }
   }
-  return false;
+  return {
+    correct: result,
+    wrongData: [],
+  };
 };
 
 const Rule16JSX = ({ difficulty, rule }) => {
@@ -28,4 +42,4 @@ const Rule16JSX = ({ difficulty, rule }) => {
   );
 };
 
-export { Rule16Validator, Rule16JSX };
+export { Rule16Validator, Rule16JSX, Rule16Cheat };

@@ -12,7 +12,8 @@ const kmpMatch = (text, pattern) => {
     if (pattern.charAt(j) == text.charAt(i)) {
       if (j == m - 1) {
         // console.log("Match found with KMP");
-        return true;
+        // console.log(i - m + 1);
+        return i - m + 1;
       }
       i++;
       j++;
@@ -22,7 +23,7 @@ const kmpMatch = (text, pattern) => {
       i++;
     }
   }
-  return false;
+  return -1;
 };
 
 const computeBorder = (pattern) => {

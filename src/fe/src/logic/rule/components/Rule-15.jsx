@@ -8,6 +8,7 @@ import { difficultyData } from "../../gameData";
 import { useEffect, useState } from "react";
 
 var excludedLetters = [];
+var cheatActivated = false;
 
 const modifyExcludedLetters = (letters, difficulty) => {
   if (
@@ -29,24 +30,9 @@ const choiceLetters = alphabets
   .sort(() => 0.5 - Math.random())
   .slice(0, 10);
 
-const Rule15Validator = (password, difficulty) => {
-  // console.log("Rule 15 validator");
-  if (excludedLetters.length === difficultyData[difficulty].sacrifice) {
-    for (let i = 0; i < difficultyData[difficulty].sacrifice; i++) {
-      if (password.toLowerCase().includes(excludedLetters[i].toLowerCase())) {
-        // console.log("Rule 15 failed");
-        return false;
-      }
-    }
-    // console.log("Rule 15 passed");
-    return true;
-  }
-  return false;
-};
-
 // export { Rule15, excludedLetters, modifyExcludedLetters, choiceLetters };
 
-const KeyboardButton = ({ char, rule, password, difficulty }) => {
+const KeyboardButton = ({ char, rule, password, setPassword, difficulty }) => {
   const [isActive, setIsActive] = useState(false);
   useEffect(() => {
     setIsActive(false);
@@ -56,7 +42,17 @@ const KeyboardButton = ({ char, rule, password, difficulty }) => {
     const success = modifyExcludedLetters(char, difficulty);
     if (success) {
       setIsActive(!isActive);
-      rule.check(password, difficulty);
+
+      const oldPassword = password;
+      const newPassword = password + " ";
+
+      setPassword(newPassword);
+
+      setTimeout(() => {
+        setPassword(oldPassword);
+      }, 10);
+
+      // rule.check(password, difficulty);
     }
   };
   return (
@@ -71,7 +67,46 @@ const KeyboardButton = ({ char, rule, password, difficulty }) => {
   );
 };
 
-const Rule15JSX = ({ password, difficulty, rule }) => {
+const Rule15Cheat = (password, setPassword, difficulty, wrongData) => {
+  cheatActivated = true;
+
+  setTimeout(() => {
+    setPassword(password);
+  }, 20);
+};
+
+const Rule15Validator = (password, difficulty) => {
+  // console.log("Rule 15 validator");
+  if (cheatActivated) {
+    return {
+      correct: true,
+      wrongData: [],
+    };
+  }
+
+  if (excludedLetters.length === difficultyData[difficulty].sacrifice) {
+    for (let i = 0; i < difficultyData[difficulty].sacrifice; i++) {
+      if (password.toLowerCase().includes(excludedLetters[i].toLowerCase())) {
+        // console.log("Rule 15 failed");
+        return {
+          correct: false,
+          wrongData: [],
+        };
+      }
+    }
+    // console.log("Rule 15 passed");
+    return {
+      correct: true,
+      wrongData: [],
+    };
+  }
+  return {
+    correct: false,
+    wrongData: [],
+  };
+};
+
+const Rule15JSX = ({ password, setPassword, difficulty, rule }) => {
   return (
     <RuleBox rule={rule}>
       <p>
@@ -85,6 +120,7 @@ const Rule15JSX = ({ password, difficulty, rule }) => {
               char={char}
               rule={rule}
               password={password}
+              setPassword={setPassword}
               difficulty={difficulty}
             />
           ))}
@@ -94,4 +130,4 @@ const Rule15JSX = ({ password, difficulty, rule }) => {
   );
 };
 
-export { Rule15Validator, Rule15JSX };
+export { Rule15Validator, Rule15JSX, Rule15Cheat };

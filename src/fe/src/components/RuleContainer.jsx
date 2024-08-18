@@ -2,9 +2,17 @@ import React from "react";
 import { motion } from "framer-motion";
 import Rules from "../logic/rule/RuleList";
 
-const RuleContainer = ({ password, setPassword, difficulty }) => {
+const RuleContainer = ({
+  password,
+  setPassword,
+  difficulty,
+  ruleProps,
+  setGameResult,
+  gameResult,
+}) => {
   const sortRules = () => {
-    Rules.checkAll(password, difficulty);
+    if (gameResult === -1)
+      Rules.checkAll(password, setPassword, difficulty, setGameResult);
     const jsxObjects = Rules.list
       .filter((rule) => rule.correct !== null)
       .map((rule) => ({
@@ -16,6 +24,8 @@ const RuleContainer = ({ password, setPassword, difficulty }) => {
               difficulty={difficulty}
               password={password}
               setPassword={setPassword}
+              ruleProps={ruleProps}
+              setGameResult={setGameResult}
             />
           </div>
         ),

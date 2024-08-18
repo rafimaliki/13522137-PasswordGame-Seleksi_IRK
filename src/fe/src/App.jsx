@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import GamePage from "./pages/Game";
+import MasterPage from "./pages/Master";
 import HistoryPage from "./pages/History";
 
 function App() {
@@ -15,8 +16,8 @@ function App() {
       <Router>
         <div className="app-container min-h-screen">
           <Routes>
-            <Route exact path="/" element={<GamePage />} />
-            <Route path="/history" element={<HistoryPage />} />
+            <Route exact path="/" element={<MasterPage />} />
+            {/* <Route path="/history" element={<HistoryPage />} /> */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>

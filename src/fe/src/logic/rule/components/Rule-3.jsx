@@ -5,8 +5,19 @@
 
 import RuleBox from "../../../components/RuleBox";
 
+const Rule3Cheat = (password, setPassword, difficulty, wrongData) => {
+  const newPassword = password + "A";
+  setTimeout(() => {
+    setPassword(newPassword);
+  }, 20);
+};
+
 const Rule3Validator = (password) => {
-  return /[A-Z]/.test(password);
+  let result = /[A-Z]/.test(password);
+  return {
+    correct: result,
+    wrongData: [],
+  };
 };
 
 const Rule3JSX = ({ password, rule }) => {
@@ -17,4 +28,4 @@ const Rule3JSX = ({ password, rule }) => {
   );
 };
 
-export { Rule3Validator, Rule3JSX };
+export { Rule3Validator, Rule3JSX, Rule3Cheat };

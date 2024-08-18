@@ -5,14 +5,6 @@ import { useEffect, useState } from "react";
 var hasBurned = false;
 var hasFire = false;
 
-const Rule10Validator = (password) => {
-  if (!hasBurned) {
-    hasBurned = true;
-    return false;
-  }
-  return !password.includes("🔥");
-};
-
 const SetFire = (password, setPassword) => {
   const fireIndex = password.indexOf("🔥");
   if (fireIndex === -1 && !hasFire) {
@@ -31,34 +23,65 @@ const isAllFire = (password) => {
   return password.indexOf("🔥") === 0;
 };
 
-const Rule10JSX = ({ difficulty, rule, password, setPassword }) => {
-  const [isRunning, setIsRunning] = useState(false);
+const Rule10Cheat = (password, setPassword, difficulty, wrongData) => {
+  const newPassword = password.replace(/🔥/g, "");
+
+  setTimeout(() => {
+    setPassword(newPassword);
+  }, 20);
+};
+const Rule10Validator = (password) => {
+  let result = !password.includes("🔥");
+
+  if (!hasBurned) {
+    hasBurned = true;
+    result = false;
+  }
+  return {
+    correct: result,
+    wrongData: [],
+  };
+};
+
+const Rule10JSX = ({
+  difficulty,
+  rule,
+  password,
+  setPassword,
+  ruleProps,
+  setGameResult,
+}) => {
+  // const [isFireActive, setIsFireActive] = useState(false);
+
+  const isFireActive = ruleProps.isFireActive;
+  const setIsFireActive = ruleProps.setIsFireActive;
 
   useEffect(() => {
     if (rule.correct) return;
     let timerId;
-    if (rule.correct === false && !isRunning && !hasFire) {
+    if (rule.correct === false && !isFireActive && !hasFire) {
       SetFire(password, setPassword);
-      setIsRunning(true);
-    } else if (rule.correct && isRunning) {
+      setIsFireActive(true);
+    } else if (rule.correct && isFireActive) {
       console.log("Rule 10 passed");
-      setIsRunning(false);
+      setIsFireActive(false);
       clearInterval(timerId);
     } else if (!rule.correct && isAllFire(password)) {
       console.log("Rule 10 failed");
-      setIsRunning(false);
+      setIsFireActive(false);
+      setGameResult(0);
       clearInterval(timerId);
-    } else if (isRunning) {
+    } else if (isFireActive) {
       timerId = setInterval(() => {
         SetFire(password, setPassword);
       }, difficultyData[difficulty].burnSpeed);
     }
     return () => {
-      if (isRunning) {
+      if (isFireActive) {
         clearInterval(timerId);
       }
     };
-  }, [isRunning, password, setPassword]);
+  }, [isFireActive, password, setPassword]);
 
   return (
     <RuleBox rule={rule}>
@@ -67,4 +90,4 @@ const Rule10JSX = ({ difficulty, rule, password, setPassword }) => {
   );
 };
 
-export { Rule10Validator, Rule10JSX };
+export { Rule10Validator, Rule10JSX, Rule10Cheat };

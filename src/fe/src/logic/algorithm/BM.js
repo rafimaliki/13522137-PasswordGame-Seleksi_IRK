@@ -7,7 +7,7 @@ const bmMatch = (text, pattern) => {
   let i = m - 1;
 
   if (i > n - 1) {
-    return false;
+    return -1;
   }
 
   let j = m - 1;
@@ -16,7 +16,8 @@ const bmMatch = (text, pattern) => {
     if (pattern.charAt(j) === text.charAt(i)) {
       if (j === 0) {
         // console.log("Match found with BM");
-        return true;
+        console.log(i);
+        return i;
       } else {
         i--;
         j--;
@@ -31,7 +32,7 @@ const bmMatch = (text, pattern) => {
     }
   } while (i <= n - 1);
 
-  return false;
+  return -1;
 };
 
 const buildLast = (pattern) => {

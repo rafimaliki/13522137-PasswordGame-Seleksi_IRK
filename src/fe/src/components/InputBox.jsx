@@ -1,8 +1,10 @@
 import React from "react";
+import { matchingAlgorithm } from "../logic/gameData";
+import Rules from "../logic/rule/RuleList";
 
 const InputBox = ({ password, setPassword }) => {
   const handleInputChange = (e) => {
-    const newPasword = e.target.value;
+    var newPasword = e.target.value;
     setPassword(newPasword);
     // console.log("Password:", newPasword);
   };

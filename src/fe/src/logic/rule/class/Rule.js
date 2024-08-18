@@ -1,3 +1,5 @@
+import { matchingAlgorithm } from "../../gameData";
+
 /**
  * Represents a rule for password validation.
  * @class
@@ -10,11 +12,14 @@ class Rule {
    * @param {function(string): boolean} - The function used to check if the password meets the rule.
    * @param {any} [JSXdata=null] - Optional JSX data associated with the rule.
    */
-  constructor(number, validator, JSXdata) {
+  constructor(number, validator, JSXdata, cheat) {
     this.number = number;
     this.checker = validator;
     this.JSXdata = JSXdata;
+    this.cheat = cheat;
+
     this.correct = null; // Indicates if the password satisfies the rule.
+    this.wrongData = null; // Array to hold the indices of the wrong characters.
   }
 
   /**
@@ -23,8 +28,9 @@ class Rule {
    * @returns {boolean} True if the password satisfies the rule, otherwise false.
    */
   check(password, difficulty) {
-    const correct = this.checker(password, difficulty);
+    const { correct, wrongData } = this.checker(password, difficulty);
     this.correct = correct;
+    this.wrongData = wrongData;
     return correct;
   }
 }
@@ -62,7 +68,14 @@ class RuleList {
    * @param {string} password - The password to be checked.
    * @returns {RuleList} The list of rules.
    */
-  checkAll(password, difficulty) {
+  checkAll(password, setPassword, difficulty, setGameResult) {
+    var cheatDetected = false;
+    if (matchingAlgorithm(password, "cheat") !== -1) {
+      cheatDetected = true;
+      const newPasword = password.replace("cheat", "");
+      password = newPasword;
+    }
+
     var countCorrect = 0;
     for (let i = 0; i < this.countShow; i++) {
       this.list[i].check(password, difficulty) ? countCorrect++ : null;
@@ -78,30 +91,28 @@ class RuleList {
       );
     }
 
+    if (cheatDetected) {
+      for (let i = 0; i < this.list.length; i++) {
+        if (this.list[i].correct === false) {
+          // console.log("cheat rule:", this.list[i].number);
+          this.list[i].cheat(
+            password,
+            setPassword,
+            difficulty,
+            this.list[i].wrongData
+          );
+          break;
+        }
+      }
+    }
+
     if (countCorrect === this.list.length) {
-      // console.log("You win!");
+      setTimeout(() => {
+        setGameResult(1);
+      }, 20);
     }
 
     return this;
-  }
-
-  /**
-   * Custom sorts the list based on rule correctness and number.
-   * @returns {Rule[]} The sorted list of rules.
-   */
-  customSort() {
-    const sortedList = this.list.filter((rule) => rule.correct !== null);
-    sortedList.sort((a, b) => {
-      if (a.correct === b.correct && a.correct) {
-        return b.number - a.number;
-      } else if (a.correct === b.correct && !a.correct) {
-        return a.number - b.number;
-      } else {
-        return a.correct - b.correct;
-      }
-    });
-
-    return sortedList;
   }
 }
 

@@ -17,8 +17,36 @@ const isPrime = (num) => {
   return true;
 };
 
+const closestBiggerPrime = (num) => {
+  while (!isPrime(num)) {
+    num++;
+  }
+  return num;
+};
+
+const Rule19Cheat = (password, setPassword, difficulty, wrongData) => {
+  let length = password.length;
+  let newLength = closestBiggerPrime(length);
+
+  let newPassword = password + newLength.toString();
+  let countZero = newLength - newPassword.length;
+
+  for (let i = 0; i < countZero; i++) {
+    newPassword += "0";
+  }
+
+  setTimeout(() => {
+    setPassword(newPassword);
+  }, 20);
+};
+
 const Rule19Validator = (password) => {
-  return isPrime(password.length);
+  let result = isPrime(password.length);
+
+  return {
+    correct: result,
+    wrongData: [],
+  };
 };
 
 const Rule19JSX = ({ difficulty, rule }) => {
@@ -29,4 +57,4 @@ const Rule19JSX = ({ difficulty, rule }) => {
   );
 };
 
-export { Rule19Validator, Rule19JSX };
+export { Rule19Validator, Rule19JSX, Rule19Cheat };

@@ -4,7 +4,7 @@
  */
 
 import RuleBox from "../../../components/RuleBox";
-import { difficultyData } from "../../gameData";
+import { difficultyData, matchingAlgorithm } from "../../gameData";
 
 const isValidRomanNumeral = (romanNumeral) => {
   const romanNumeralPattern =
@@ -22,7 +22,6 @@ const romanToNumber = (romanNumeral) => {
     D: 500,
     M: 1000,
   };
-
   let result = 0;
   let prevValue = 0;
 
@@ -42,18 +41,80 @@ const romanToNumber = (romanNumeral) => {
   return result;
 };
 
-const Rule9Validator = (password) => {
-  const targetSum = 36;
-  const romanNumeralMatches = password.match(/[IVXLCDM]+/g);
+const numberToRoman = (number) => {
+  const romanNumeralValues = [
+    [1000, "M"],
+    [900, "CM"],
+    [500, "D"],
+    [400, "CD"],
+    [100, "C"],
+    [90, "XC"],
+    [50, "L"],
+    [40, "XL"],
+    [10, "X"],
+    [9, "IX"],
+    [5, "V"],
+    [4, "IV"],
+    [1, "I"],
+  ];
 
-  if (romanNumeralMatches) {
-    var validRomanNumerals = romanNumeralMatches.filter(isValidRomanNumeral);
-    var romanNumeralValues = validRomanNumerals.map(romanToNumber);
-    const sum = romanNumeralValues.reduce((acc, val) => acc * val, 1);
-    return sum === targetSum;
+  let result = "";
+  let remainingNumber = number;
+
+  for (let i = 0; i < romanNumeralValues.length; i++) {
+    const [value, romanChar] = romanNumeralValues[i];
+    while (remainingNumber >= value) {
+      result += romanChar;
+      remainingNumber -= value;
+    }
   }
 
-  return false;
+  return result;
+};
+
+const Rule9Cheat = (password, setPassword, difficulty, wrongData) => {
+  let sum = wrongData[0];
+  const targetSum = wrongData[1];
+  const romanNumeralValues = wrongData[2];
+
+  // console.log(sum, targetSum, romanNumeralValues);
+
+  for (let i = 0; i < romanNumeralValues.length; i++) {
+    const index = matchingAlgorithm(password, romanNumeralValues[i]);
+    password =
+      password.slice(0, index) +
+      password.slice(index + romanNumeralValues[i].length);
+  }
+
+  const targetRoman = difficultyData[difficulty].sumRoman;
+  const targetRomanNumeral = numberToRoman(targetRoman);
+
+  password += targetRomanNumeral;
+
+  setTimeout(() => {
+    setPassword(password);
+  }, 20);
+};
+
+const Rule9Validator = (password, difficulty) => {
+  const targetSum = difficultyData[difficulty].sumRoman;
+  const romanNumeralMatches = password.match(/[IVXLCDM]+/g);
+
+  let result = false;
+  let sum = 0;
+  let validRomanNumerals = [];
+
+  if (romanNumeralMatches) {
+    validRomanNumerals = romanNumeralMatches.filter(isValidRomanNumeral);
+    let romanNumeralValues = validRomanNumerals.map(romanToNumber);
+    sum = romanNumeralValues.reduce((acc, val) => acc * val, 1);
+    result = sum === targetSum;
+  }
+
+  return {
+    correct: result,
+    wrongData: [sum, targetSum, validRomanNumerals],
+  };
 };
 
 const Rule9JSX = ({ difficulty, rule }) => {
@@ -67,4 +128,4 @@ const Rule9JSX = ({ difficulty, rule }) => {
   );
 };
 
-export { Rule9Validator, Rule9JSX };
+export { Rule9Validator, Rule9JSX, Rule9Cheat };

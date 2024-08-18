@@ -6,7 +6,7 @@
 import { matchingAlgorithm } from "../../gameData";
 import RuleBox from "../../../components/RuleBox";
 
-const Rule20Validator = (password) => {
+const getCurrentTime = () => {
   const now = new Date();
 
   var currentHour = now.getHours();
@@ -19,9 +19,35 @@ const Rule20Validator = (password) => {
     currentMinute = "0" + currentMinute;
   }
 
-  const time = `${currentHour}:${currentMinute}`;
+  return `${currentHour}:${currentMinute}`;
+};
 
-  return matchingAlgorithm(password, time);
+const Rule20Cheat = (password, setPassword, difficulty, wrongData) => {
+  const regex = /\b\d{2}:\d{2}\b/;
+  const match = password.match(regex);
+
+  const currentTime = getCurrentTime();
+
+  if (match) {
+    password.replace(match[0], getCurrentTime());
+  } else {
+    password += currentTime;
+  }
+
+  setTimeout(() => {
+    setPassword(password);
+  }, 20);
+};
+
+const Rule20Validator = (password) => {
+  const time = getCurrentTime();
+
+  let result = matchingAlgorithm(password, time) !== -1;
+
+  return {
+    correct: result,
+    wrongData: [],
+  };
 };
 
 const Rule20JSX = ({ difficulty, rule }) => {
@@ -32,4 +58,4 @@ const Rule20JSX = ({ difficulty, rule }) => {
   );
 };
 
-export { Rule20Validator, Rule20JSX };
+export { Rule20Validator, Rule20JSX, Rule20Cheat };

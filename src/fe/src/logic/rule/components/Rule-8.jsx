@@ -11,14 +11,27 @@ import axios from "axios";
 
 var Negara = [];
 
+const Rule8Cheat = (password, setPassword, difficulty, wrongData) => {
+  const randomNegara = Negara[Math.floor(Math.random() * Negara.length)];
+  const newPassword = password + randomNegara;
+  setTimeout(() => {
+    setPassword(newPassword);
+  }, 20);
+};
+
 const Rule8Validator = (password) => {
   // if (Negara.length === 0) return true;
+  let result = false;
   for (let i = 0; i < Negara.length; i++) {
-    if (matchingAlgorithm(password.toLowerCase(), Negara[i])) {
-      return true;
+    if (matchingAlgorithm(password.toLowerCase(), Negara[i]) !== -1) {
+      result = true;
+      break;
     }
   }
-  return false;
+  return {
+    correct: result,
+    wrongData: [],
+  };
 };
 
 const Rule8JSX = ({ difficulty, rule }) => {
@@ -64,4 +77,4 @@ const Rule8JSX = ({ difficulty, rule }) => {
   );
 };
 
-export { Rule8Validator, Rule8JSX };
+export { Rule8Validator, Rule8JSX, Rule8Cheat };

@@ -11,8 +11,21 @@ import axios from "axios";
 
 var Captcha = "";
 
+const Rule12Cheat = (password, setPassword, difficulty, wrongData) => {
+  const newPassword = password + Captcha;
+
+  setTimeout(() => {
+    setPassword(newPassword);
+  }, 20);
+};
+
 const Rule12Validator = (password) => {
-  return matchingAlgorithm(password, Captcha);
+  let result = matchingAlgorithm(password, Captcha) !== -1;
+
+  return {
+    correct: result,
+    wrongData: [],
+  };
 };
 
 const Rule12JSX = ({ difficulty, rule, password }) => {
@@ -66,4 +79,4 @@ const Rule12JSX = ({ difficulty, rule, password }) => {
   );
 };
 
-export { Rule12Validator, Rule12JSX };
+export { Rule12Validator, Rule12JSX, Rule12Cheat };

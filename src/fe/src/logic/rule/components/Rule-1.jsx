@@ -6,8 +6,21 @@
 import RuleBox from "../../../components/RuleBox";
 import { difficultyData } from "../../gameData";
 
+const Rule1Cheat = (password, setPassword, difficulty, wrongData) => {
+  const extraLength = difficultyData[difficulty].minChar - password.length;
+  const newPassword = password + "a".repeat(extraLength);
+
+  setTimeout(() => {
+    setPassword(newPassword);
+  }, 20);
+};
+
 const Rule1Validator = (password, difficulty) => {
-  return password.length >= difficultyData[difficulty].minChar;
+  let result = password.length >= difficultyData[difficulty].minChar;
+  return {
+    correct: result,
+    wrongData: [],
+  };
 };
 
 const Rule1JSX = ({ difficulty, rule }) => {
@@ -21,4 +34,4 @@ const Rule1JSX = ({ difficulty, rule }) => {
   );
 };
 
-export { Rule1Validator, Rule1JSX };
+export { Rule1Validator, Rule1JSX, Rule1Cheat };

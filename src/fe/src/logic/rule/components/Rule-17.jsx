@@ -6,6 +6,26 @@
 import { difficultyData } from "../../gameData";
 import RuleBox from "../../../components/RuleBox";
 
+const Rule17Cheat = (password, setPassword, difficulty, wrongData) => {
+  let count = wrongData[0];
+  let length = password.length;
+
+  let minPercentage = wrongData[1];
+
+  let percentage = count / length;
+
+  while (percentage < minPercentage) {
+    password += "0";
+    count++;
+    length++;
+    percentage = count / length;
+  }
+
+  setTimeout(() => {
+    setPassword(password);
+  }, 20);
+};
+
 const Rule17Validator = (password, difficulty) => {
   const digitPercentage = difficultyData[difficulty].digitPercentage;
 
@@ -16,7 +36,12 @@ const Rule17Validator = (password, difficulty) => {
     }
   }
 
-  return count / password.length >= digitPercentage; // Check if the percentage of digits meets the digit requirement
+  let result = count / password.length >= digitPercentage;
+
+  return {
+    correct: result,
+    wrongData: [count, digitPercentage],
+  };
 };
 
 const Rule17JSX = ({ difficulty, rule }) => {
@@ -35,4 +60,4 @@ const Rule17JSX = ({ difficulty, rule }) => {
   );
 };
 
-export { Rule17Validator, Rule17JSX };
+export { Rule17Validator, Rule17JSX, Rule17Cheat };
