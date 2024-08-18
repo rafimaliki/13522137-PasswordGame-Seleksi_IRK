@@ -29,7 +29,7 @@ const Rule8Validator = (password) => {
     }
   }
   return {
-    correct: result,
+    correct: result || Negara.length === 0,
     wrongData: [],
   };
 };
