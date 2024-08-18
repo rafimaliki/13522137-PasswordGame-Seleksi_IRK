@@ -3,12 +3,11 @@ import InputBox from "../components/InputBox";
 import RuleContainer from "../components/RuleContainer";
 import ComboBox from "../components/ComboBox";
 import { setMatchingAlgorithm } from "../logic/gameData";
-import Rules from "../logic/rule/RuleList";
 import GameResult from "../components/GameResult";
-import NavButton from "../components/NavButton";
 
 const GamePage = () => {
   const [password, setPassword] = useState("");
+  const [score, setScore] = useState(0);
   const [difficulty, setDifficulty] = useState("Easy");
 
   const [startDate, setStartDate] = useState(null);
@@ -50,13 +49,20 @@ const GamePage = () => {
         />
       </div>
       {gameResult === -1 ? (
-        <InputBox password={password} setPassword={setPassword} />
+        <InputBox
+          password={password}
+          setPassword={setPassword}
+          score={score}
+          setScore={setScore}
+          difficulty={difficulty}
+        />
       ) : (
         <GameResult
           password={password}
           result={gameResult}
           startDate={startDate}
           difficulty={difficulty}
+          score={score}
         />
       )}
       <RuleContainer

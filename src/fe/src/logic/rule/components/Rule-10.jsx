@@ -63,11 +63,11 @@ const Rule10JSX = ({
       SetFire(password, setPassword);
       setIsFireActive(true);
     } else if (rule.correct && isFireActive) {
-      console.log("Rule 10 passed");
+      // console.log("Rule 10 passed");
       setIsFireActive(false);
       clearInterval(timerId);
     } else if (!rule.correct && isAllFire(password)) {
-      console.log("Rule 10 failed");
+      // console.log("Rule 10 failed");
       setIsFireActive(false);
       setGameResult(0);
       clearInterval(timerId);

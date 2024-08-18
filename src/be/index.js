@@ -4,16 +4,15 @@ const { Storage } = require("@google-cloud/storage");
 const app = express();
 const port = 3000;
 
-// Enable CORS for all routes
 app.use(cors());
 
-// Create a Google Cloud Storage client
+// google cloud storage
 const storage = new Storage({
   projectId: "passwordgame-irk-137",
-  keyFilename: "./key.json", // Adjust path as necessary
+  keyFilename: "./key.json",
 });
 
-// Helper function to shuffle an array (Fisher-Yates shuffle algorithm)
+// function: shuffle array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -22,25 +21,20 @@ function shuffleArray(array) {
   return array;
 }
 
-// Function to list a specified number of random images from a bucket
+// function: get random image from bucket
 async function getRandomImagesFromBucket(bucketName, numberOfImages) {
   try {
     const [files] = await storage.bucket(bucketName).getFiles();
 
-    // Shuffle the files array to get random images
     const shuffledFiles = shuffleArray(files);
-
-    // Select the first numberOfImages images
     const selectedFiles = shuffledFiles.slice(0, numberOfImages);
 
-    // Create an array to store result objects
     const resultArray = [];
 
-    // Populate the array with objects containing name and img
     for (const file of selectedFiles) {
       const [buffer] = await file.download();
       const base64String = buffer.toString("base64");
-      const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
+      const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, "");
       resultArray.push({ name: fileNameWithoutExtension, img: base64String });
     }
 
@@ -51,14 +45,13 @@ async function getRandomImagesFromBucket(bucketName, numberOfImages) {
   }
 }
 
+// function: get all images from bucket
 async function getAllImagesFromBucket(bucketName) {
   try {
     const [files] = await storage.bucket(bucketName).getFiles();
 
-    // Create an array to store result objects
     const resultArray = [];
 
-    // Populate the array with objects containing name and img
     for (const file of files) {
       const [buffer] = await file.download();
       const base64String = buffer.toString("base64");
@@ -73,12 +66,12 @@ async function getAllImagesFromBucket(bucketName) {
   }
 }
 
-// Define routes
+// routes:
+
 app.get("/", (req, res) => {
   res.send("Sui-chan wa kyou mo kawaii!");
 });
 
-// Route to get random images from a bucket
 app.get("/images", async (req, res) => {
   const bucketName = req.query.bucketName;
   const numberOfImages = parseInt(req.query.numberOfImages, 10);
@@ -95,7 +88,6 @@ app.get("/images", async (req, res) => {
   }
 });
 
-// rout to get all images from a bucket
 app.get("/allimages", async (req, res) => {
   const bucketName = req.query.bucketName;
 
@@ -111,7 +103,6 @@ app.get("/allimages", async (req, res) => {
   }
 });
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

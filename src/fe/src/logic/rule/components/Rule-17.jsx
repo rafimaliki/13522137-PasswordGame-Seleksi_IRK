@@ -46,7 +46,6 @@ const Rule17Validator = (password, difficulty) => {
 
 const Rule17JSX = ({ difficulty, rule }) => {
   const percentage = (decimal) => {
-    // return string representation of percentage
     return `${decimal * 100}%`;
   };
 

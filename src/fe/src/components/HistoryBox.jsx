@@ -58,6 +58,10 @@ const HistoryBox = ({ entry, index, onDelete }) => {
         <span className={`font-semibold ${textColor}`}>:</span>{" "}
         {entry.status ? "Berhasil" : "Gagal"}
       </p>
+      <p>
+        <span className={`font-semibold ${textColor} mr-10`}>Skor</span>{" "}
+        <span className={`font-semibold ${textColor}`}>:</span> {entry.score}
+      </p>
       <button
         className={`font-bold text-xl absolute bottom-[0px] right-0 p-2 rounded`}
         onClick={() => deleteEntry(entry.entryId)}

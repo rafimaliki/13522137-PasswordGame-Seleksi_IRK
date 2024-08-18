@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Rules from "../logic/rule/RuleList";
 
 const getDuration = (startDate) => {
@@ -31,16 +31,20 @@ const getCompletedRules = () => {
   return completedRules;
 };
 
-const GameResult = ({ password, result, startDate, difficulty }) => {
+const GameResult = ({ password, result, startDate, difficulty, score }) => {
   const handleReset = () => {
     window.location.reload();
   };
 
-  const formattedTime = getDuration(startDate);
   const completedRules = getCompletedRules();
+
+  const [formattedTime, setFormattedTime] = useState("");
 
   useEffect(() => {
     const savePasswordToHistory = () => {
+      const duration = getDuration(startDate);
+      setFormattedTime(duration);
+
       const history = JSON.parse(localStorage.getItem("passwordHistory")) || [];
       // const history = [];
 
@@ -59,10 +63,11 @@ const GameResult = ({ password, result, startDate, difficulty }) => {
           history.length === 0 ? 0 : history[history.length - 1].entryId + 1,
         password: password,
         date: date,
-        timeElapsed: formattedTime,
+        timeElapsed: duration,
         difficulty: difficulty,
         status: result,
         completedRules: completedRules,
+        score: result ? score : 0,
       };
 
       history.push(newEntry);
@@ -72,17 +77,20 @@ const GameResult = ({ password, result, startDate, difficulty }) => {
       localStorage.setItem("passwordHistory", JSON.stringify(history));
     };
 
-    if (password) {
-      savePasswordToHistory();
-    }
+    savePasswordToHistory();
   }, [password]);
 
   return (
     <div className="flex flex-col w-[30rem] h-fit mt-10 items-center">
       <div className="flex justify-between w-full">
-        <p className="font-bold w-fit py-2 text-white text-shadow">
-          Masukkan Password
-        </p>
+        <div className="flex">
+          <p className="font-bold w-fit py-2 text-white text-shadow">
+            Masukkan Password
+          </p>
+          <p className="font-light w-fit py-2 text-white text-shadow pl-2">
+            (Skor: {score})
+          </p>
+        </div>
         <p className="font-bold w-fit py-2 text-white text-shadow">
           {password.length}
         </p>
