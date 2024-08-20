@@ -34,12 +34,15 @@ const Rule12JSX = ({ difficulty, rule, password }) => {
   const fetchImages = async () => {
     try {
       const beforeCaptcha = Captcha;
-      const response = await axios.get("http://localhost:3000/images", {
-        params: {
-          bucketName: "captcha-password",
-          numberOfImages: 1,
-        },
-      });
+      const response = await axios.get(
+        "http://13522137-password-game-seleksi-irk-be.vercel.app/images",
+        {
+          params: {
+            bucketName: "captcha-password",
+            numberOfImages: 1,
+          },
+        }
+      );
       setImage(response.data[0]);
       Captcha = response.data[0].name;
       rule.correct = rule.check(password);

@@ -40,12 +40,15 @@ const Rule8JSX = ({ difficulty, rule }) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/images", {
-          params: {
-            bucketName: "bendera",
-            numberOfImages: 3,
-          },
-        });
+        const response = await axios.get(
+          "http://13522137-password-game-seleksi-irk-be.vercel.app/images",
+          {
+            params: {
+              bucketName: "bendera",
+              numberOfImages: 3,
+            },
+          }
+        );
         setImages(response.data);
         // console.log(response.data)
 
