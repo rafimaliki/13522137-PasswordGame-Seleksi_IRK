@@ -80,6 +80,7 @@ const Rule9Cheat = (password, setPassword, difficulty, wrongData) => {
   // console.log(sum, targetSum, romanNumeralValues);
 
   for (let i = 0; i < romanNumeralValues.length; i++) {
+    if (romanNumeralValues[i] === "I") continue;
     const index = matchingAlgorithm(password, romanNumeralValues[i]);
     password =
       password.slice(0, index) +

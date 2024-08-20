@@ -18,7 +18,7 @@ const scoreCounter = (password, difficulty) => {
   if (password.length > 100) {
     const extraLength = password.length - 100;
 
-    const minusFactor = 6;
+    const minusFactor = 10;
     score -= extraLength * minusFactor;
   }
 

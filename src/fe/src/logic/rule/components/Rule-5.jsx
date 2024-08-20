@@ -16,41 +16,39 @@ const Rule5Cheat = (password, setPassword, difficulty, wrongData) => {
   if (currentSum < targetSum) {
     while (currentSum !== targetSum) {
       let diff = targetSum - currentSum;
-      let digit = diff % 10;
-      if (digit === 0) {
-        digit = 9;
+      if (diff > 9) {
+        diff = 9;
       }
-      digit = Math.floor(Math.random() * digit) + 1;
-      password = digit.toString() + password;
-      currentSum += digit;
+      password = diff.toString() + password;
+      currentSum += diff;
     }
   } else {
     const prevLength = password.length;
     while (currentSum > targetSum) {
-      let digitIndex = password.search(/\d/);
-      let digit = parseInt(password[digitIndex]);
-      password = password.slice(0, digitIndex) + password.slice(digitIndex + 1);
+      let diffIndex = password.search(/\d/);
+      let diff = parseInt(password[diffIndex]);
+      password = password.slice(0, diffIndex) + password.slice(diffIndex + 1);
 
-      currentSum -= digit;
+      currentSum -= diff;
     }
 
     while (currentSum !== targetSum) {
       let diff = targetSum - currentSum;
-      let digit = diff % 10;
-      if (digit === 0) {
-        digit = 9;
+      if (diff > 9) {
+        diff = 9;
       }
-      digit = Math.floor(Math.random() * digit) + 1;
 
-      password = digit.toString() + password;
-      currentSum += digit;
+      password = diff.toString() + password;
+      currentSum += diff;
     }
 
     const newLength = password.length;
     const diffLength = prevLength - newLength;
+    const randomChars =
+      "ABEFGHJKNOPQRSTUWYZabcdefghijklmnopqrstuvwxyz0!@#$%^&*()_+";
     // console.log("diffLength", diffLength);
     for (let i = 0; i < diffLength; i++) {
-      password += "0";
+      password += randomChars[Math.floor(Math.random() * randomChars.length)];
     }
   }
 

@@ -9,7 +9,7 @@ const SetFire = (password, setPassword) => {
   const fireIndex = password.indexOf("🔥");
   if (fireIndex === -1 && !hasFire) {
     hasFire = true;
-    setPassword(password.slice(0, -1) + "🔥");
+    setPassword(password + "🔥");
   } else if (fireIndex > 0) {
     const newPassword =
       password.substring(0, fireIndex - 1) +

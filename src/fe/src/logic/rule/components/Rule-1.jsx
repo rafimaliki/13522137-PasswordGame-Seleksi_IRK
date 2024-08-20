@@ -7,9 +7,12 @@ import RuleBox from "../../../components/RuleBox";
 import { difficultyData } from "../../gameData";
 
 const Rule1Cheat = (password, setPassword, difficulty, wrongData) => {
+  const randomLetters = "abcdefghijklmnopqrstuvwxyz";
   const extraLength = difficultyData[difficulty].minChar - password.length;
-  const newPassword = password + "a".repeat(extraLength);
-
+  for (let i = 0; i < extraLength; i++) {
+    password += randomLetters[Math.floor(Math.random() * 26)];
+  }
+  const newPassword = password;
   setTimeout(() => {
     setPassword(newPassword);
   }, 20);

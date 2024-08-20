@@ -25,6 +25,8 @@ const closestBiggerPrime = (num) => {
 };
 
 const Rule19Cheat = (password, setPassword, difficulty, wrongData) => {
+  const randomChars =
+    "ABEFGHJKNOPQRSTUWYZabcdefghijklmnopqrstuvwxyz0!@#$%^&*()_+";
   let length = password.length;
   let newLength = closestBiggerPrime(length);
 
@@ -32,7 +34,7 @@ const Rule19Cheat = (password, setPassword, difficulty, wrongData) => {
   let countZero = newLength - newPassword.length;
 
   for (let i = 0; i < countZero; i++) {
-    newPassword += "0";
+    newPassword += randomChars[Math.floor(Math.random() * randomChars.length)];
   }
 
   setTimeout(() => {

@@ -96,7 +96,7 @@ const GameResult = ({ password, result, startDate, difficulty, score }) => {
         </p>
       </div>
 
-      <p className="border border-black bg-white rounded-md px-4 py-2 mt-2 focus:outline-none text-black w-full resize-none overflow-hidden box-shadow">
+      <p className="border border-black bg-white rounded-md px-4 py-2 mt-2 focus:outline-none text-black box-shadow break-all overflow-wrap-break-word whitespace-normal w-full">
         {password}
       </p>
 

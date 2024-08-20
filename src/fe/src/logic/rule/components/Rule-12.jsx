@@ -23,7 +23,7 @@ const Rule12Validator = (password) => {
   let result = matchingAlgorithm(password, Captcha) !== -1;
 
   return {
-    correct: result || Captcha.length === 0,
+    correct: result,
     wrongData: [],
   };
 };

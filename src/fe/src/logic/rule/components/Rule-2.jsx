@@ -6,7 +6,8 @@
 import RuleBox from "../../../components/RuleBox";
 
 const Rule2Cheat = (password, setPassword, difficulty, wrongData) => {
-  const newPassword = "1" + password;
+  const randomNumbers = "0123456789";
+  const newPassword = randomNumbers[Math.floor(Math.random() * 10)] + password;
   setTimeout(() => {
     setPassword(newPassword);
   }, 20);
