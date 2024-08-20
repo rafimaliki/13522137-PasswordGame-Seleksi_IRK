@@ -41,7 +41,7 @@ const Rule8JSX = ({ difficulty, rule }) => {
     const fetchImages = async () => {
       try {
         const response = await axios.get(
-          "http://13522137-password-game-seleksi-irk-be.vercel.app/images",
+          "https://13522137-password-game-seleksi-irk-be.vercel.app/images",
           {
             params: {
               bucketName: "bendera",

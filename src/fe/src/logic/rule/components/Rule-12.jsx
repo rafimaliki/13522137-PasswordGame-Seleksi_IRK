@@ -35,7 +35,7 @@ const Rule12JSX = ({ difficulty, rule, password }) => {
     try {
       const beforeCaptcha = Captcha;
       const response = await axios.get(
-        "http://13522137-password-game-seleksi-irk-be.vercel.app/images",
+        "https://13522137-password-game-seleksi-irk-be.vercel.app/images",
         {
           params: {
             bucketName: "captcha-password",
