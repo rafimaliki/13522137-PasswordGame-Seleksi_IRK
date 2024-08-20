@@ -5,7 +5,7 @@ import RankPage from "./Rank";
 
 import NavButton from "../components/NavButton";
 
-const MasterPage = () => {
+const MainPage = () => {
   const [pageIndex, setPageIndex] = useState(0);
 
   return (
@@ -32,4 +32,4 @@ const MasterPage = () => {
   );
 };
 
-export default MasterPage;
+export default MainPage;
