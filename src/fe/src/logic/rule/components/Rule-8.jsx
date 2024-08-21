@@ -36,7 +36,7 @@ const Rule8Validator = (password) => {
 
 const Rule8JSX = ({ difficulty, rule }) => {
   const [images, setImages] = useState([]);
-
+  // "https://13522137-password-game-seleksi-irk-be.vercel.app/images"
   useEffect(() => {
     const fetchImages = async () => {
       try {
