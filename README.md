@@ -82,9 +82,19 @@ node index.js
 http://localhost:5173/
 ```
 
-## Cara menggunakan program
+## Tangkapan Layar
 
 ![screenshot](img/screenshot.png)
+
+Gambar 1 ( kiri)
+- Tangkapan layar halaman permainan saat berhasil memecahkan password <br>
+
+Gambar 2 (tengah)
+- Tangkapan layar halaman permainan saat gagal memecahkan password  <br>
+
+Gambar 3 (kanan)
+- Tangkapan layar halaman riwayat  <br>
+
 
 ## Referensi Belajar
 
